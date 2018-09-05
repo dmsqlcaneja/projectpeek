@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		
+	<!--  * : 바로 밑 디렉토리만 /// ** : 하위 모든 디렉토리만  -->
+	<http auto-config="true">
+		<intercept-url pattern="/teacher/**" access="hasRole('ROLE_TEACHER')" />
+	</http>
+	
+	<authentication-manager>
+		<authentication-provider>
+			<!-- 인증 유저 정보 제공 (크게 3가지로 지정 가능 1. 직접 (인메모리) 설정 2.DB이용 3.서버 사용자 정보를 꺼내오는  -->
+			<password-encoder hash="bcrypt" />		
+			<user-service>
+															<!-- 꼭 ROLE을 붙여줘야함.[스프링이 제시하고 있는 필수 항목]  -->
+				<user name="newlec" password="$2a$10$zpE1ThBwaRlZM2uMMShksurhrRjw/QtUZXB4cfON4.owLTFqkyQx." authorities="ROLE_STUDENT, ROLE_TEACHER" />
+				<!-- 인증은 되지만 티처 권한이 없음 -->
+				<user name="dragon" password="$2a$10$zpE1ThBwaRlZM2uMMShksurhrRjw/QtUZXB4cfON4.owLTFqkyQx." authorities="ROLE_STUDENT" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	
+</beans:beans>

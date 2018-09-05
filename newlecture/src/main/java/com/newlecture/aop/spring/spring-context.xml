@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<context:component-scan base-package="com.newlecture.di.ui com.newlecture.di.entity" />
+	<context:annotation-config />
+	<!-- 2. Proxy는 반드시 원본이 있어야하는데 그것을 target object라고 한다. -->
+	<!-- target object -->
+	<bean name="target" class="com.newlecture.aop.spring.NewlecCalculator" />
+	
+ 	<!-- handler object -->
+	<!-- 8. 인증 / 권한을 위한 before도 만들어보 -->
+	<bean name="before" class="com.newlecture.aop.spring.AuthorHandler"></bean>
+	<!-- 9. after 장착  -->
+	<bean name="after" class="com.newlecture.aop.spring.AfterHandler"></bean>
+ 	<!-- 10. 예외  -->
+ 	<bean name="throwing" class="com.newlecture.aop.spring.ErrorHandler"></bean>
+ 	<!-- 6. LogHandler만든거 장착  -->
+ 	<bean name="around" class="com.newlecture.aop.spring.LogHandler"></bean>
+	<!--
+	11. 이러면 문제가 발생.
+	모든것을 다 해버리니까!
+	PointCuts이라는게 생김
+	 -->
+	 
+	<!-- point cutting -->
+	
+	<!-- 12. point cutting 도구 4 가지 -->
+	<!-- 메소드가 조인 포인트. 그 때 컷팅을 너, 너, 너 라는 이름으로 컷팅을 하겠다. -->
+	<!-- 도구1 : 이름으로 cutting 하기  -->
+	<bean name="namedPointCut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+		<!--다음 목록에 사용된 메소드만 위빙이 가능해짐 -->
+		<property name="mappedName" value="add" />
+	</bean>
+	<!-- 어떤 포인트 컷에 어떤 어드바이스를 사용하게 할 것인지를 알려주는 구조체 -->
+	<bean name="namedAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="pointcut" ref="namedPointCut" />
+		<property name="advice" ref="around" />
+	</bean>
+	
+	<!-- 도구2 : 이름 패턴으로 cutting 하기 [보류] -->
+	<!-- <bean name="patternAdvisor" class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+		<property name="pattern" value="add" />
+		<property name="advice" ref="before" />
+	</bean> -->
+	
+	<!-- 도구3 :  포인트 컷 + 어드바이스 정보를 하나로 가지는 Advisor를 쓰자.-->
+	<!-- 포인트컷을 따로 만들지 말고 어드바이스가 포인트컷을 설정해주는 것을 쓰자. -->
+	<bean name="patternAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<!-- 포인트 컷 객체를 남조하지 않고 자신이 포인트 컷 정보를 설정 할 수 있다. -->
+		<!-- 앞에 .*이 있어야한다는 것만을 기억하장 -->
+		<property name="pattern" value=".*ad[abd]" />
+		<!--  value=".*dao.*" -->
+		<!-- 
+		com.newlecture.web.dao
+		com.newlecture.web.dao.mybatis
+		com.newlecture.web.dao.mybatis.mapper
+		 -->
+		<property name="advice" ref="before" />
+	</bean>
+	
+	
+ 	<!-- Bean으로 1.Proxy 객체 생성 -->
+ 	<!-- proxy object -->
+ 	<bean name="cal" class="org.springframework.aop.framework.ProxyFactoryBean">
+ 		<!-- 3. Proxy 설정 타켓을 삼고 있는 녀석이 누구인지 말해주기  -->
+ 		<property name="target" ref="target" />
+ 		<!-- 4. 어떤 Advice를 써야하는지? -->
+ 		<!-- 5. LogHandler 구현 -->
+ 		<!-- 7. LogHandler프록시에 장착-->
+ 		<property name="interceptorNames">
+ 			<!-- 여러개 장착 가능 -->
+ 			<list>
+ 				<!-- 다음은 포인트 컷을 사용하는 설정 -->
+ 				<!-- <value>namedAdvisor</value> -->
+ 				<value>patternAdvisor</value>
+ 				<!-- 다음은 포인트 컷을 사용하지 않은 설정 -->
+ 				<!-- <value>before</value>
+ 				<value>after</value>
+ 				<value>throwing</value>
+ 				<value>around</value> -->
+ 			</list>
+ 		</property>
+ 	</bean>
+ 	
+ 	
+</beans>

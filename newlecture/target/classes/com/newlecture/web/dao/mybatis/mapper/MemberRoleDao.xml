@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecture.web.dao.MemberRoleDao">
+	
+	<insert id="insert" parameterType="com.newlecture.web.entity.MemberRole">
+		insert into MemberRole(memberId, roleName, defaultRole)
+		values(#{memberId}, #{roleName}, #{defaultRole})
+	</insert>
+	
+	<update id="update" parameterType="com.newlecture.web.entity.MemberRole">
+				
+		UPDATE MemberRole
+		SET
+		      [defaultRole] = #{defaultRole}
+		WHERE memberId=#{memberId} and 	roleName=#{roleName}
+		
+	</update>
+	
+	<delete id="delete" parameterType="com.newlecture.web.entity.MemberRole">
+
+	  DELETE FROM MemberRole
+      WHERE memberId=#{memberId} and roleName=#{roleName}
+
+	</delete>
+	
+	<select id="get" resultType="com.newlecture.web.entity.MemberRole">
+		select * from MemberRole where memberId=#{memberId} and roleName=#{roleName}
+	</select>
+	
+	<select id="getList" resultType="com.newlecture.web.entity.MemberRole">
+		<!-- 경우(인자)에 따라서 쿼리를 다르게 작성해야 한다. 
+		[동적쿼리 - dynamic Query]를 만들 수 있어야 한다.  -->
+		select * from MemberRole
+		<if test="value != null">
+		where memberId = #{value}
+		</if>
+		<!-- where ${param1} like '%${param2}%' -->
+		<!-- 다음은 페이징을 위한 쿼리 옵션 -->
+		<!-- order by regDate desc
+		offset #{(param3-1)*10} rows
+		fetch next 10 rows only -->
+	</select>
+	
+</mapper>

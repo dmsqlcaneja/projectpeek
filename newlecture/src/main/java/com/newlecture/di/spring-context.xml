@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<context:component-scan base-package="com.newlecture.di.ui com.newlecture.di.entity" />
+	<context:annotation-config />
+	
+ 	<!-- <bean name="exam" class="com.newlecture.entity.Exam">
+		<constructor-arg name="eng" value="2" />
+		<constructor-arg name="kor" value="1" />
+		<constructor-arg name="math" value="3" />
+	</bean> -->
+	
+	<!-- 결합 + 조립까지  -->
+	<!-- <bean name="console" class="com.newlecture.ui.FlowExamConsole">
+		 <property name="exam" ref="exam" />
+	</bean> -->
+
+</beans>

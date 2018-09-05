@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+   /* --- reset ------------------------------------ */
+   body{
+      margin: 0px;
+   }
+   
+   h1{
+      margin: 0px;
+   }
+   
+   /* --- common style --------------------------------------------- */
+   .hidden{
+      display: none;
+   }
+   
+   /* --- component style ------------------------------------------------------- */   
+   .button{
+      width:24px;
+      height: 24px;
+      overflow: hidden;
+      text-indent: -999px;
+      border: 0px;
+      padding: 0px;
+   }
+   
+   .find-button{
+      background: url("/resources/images/icon-set.png") no-repeat -24px 0px;      
+   }
+   
+   .hamburger-button{
+      background: url("/resources/images/icon-set.png") no-repeat 0px 0px;
+   }
+   .photo {
+   	  width:150px;
+   	  height:150px;
+   	  border:1px solid #e9e9e9;
+   	  border-radius: 75px;
+   }
+   
+   /* --- header -------------------------------- */
+   #header{
+      width: 100%;
+      height: 45px;
+      line-height:45px;
+            
+      position:relative;
+      
+      border-bottom: 1px solid #a9a9a9;
+   }
+   
+   #header > h1{
+      display: inline-block;
+      position: absolute;
+      left:10px;
+      top:10px;
+   }
+   
+   #header:after{
+      content: "";
+      display: block;
+      position: fixed;
+      top:0px;
+      left:0px;
+      width: 100%;
+      height: 0%;
+      background: #000;
+      opacity: 0;   
+      
+      transition: 500ms opacity ease;
+   }
+   
+   #header #header-buttons{
+      position: absolute;
+       top: 0px;
+       right: 0px;
+       height: 100%;
+       line-height: 45px;
+       padding-right: 10px;
+   }
+   
+   #header #login-info{      
+      position: fixed;
+      top:0px;
+      right: -80%;
+      width: 80%;
+      height: 100%;
+      background: #fff;
+      z-index: 10;
+      text-align:center;
+      transition: 500ms right ease;
+   }
+   
+   #header #login-info .photo {
+   	display:inline-block;
+   }
+     
+   #header.menu-show #login-info{
+      right: 0%;
+   }
+   
+   
+   #header.menu-show:after{
+      opacity: 0.5;
+      height: 100%;
+   }
+   @media all and (min-width: 700px){
+      #header{
+         background: pink;
+      }
+   }

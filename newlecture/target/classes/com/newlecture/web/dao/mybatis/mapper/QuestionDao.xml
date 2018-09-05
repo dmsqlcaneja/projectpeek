@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecture.web.dao.QuestionDao">
+	<insert id="insert" parameterType="com.newlecture.web.entity.Question">
+		insert into Question(content, figure, regUsrId)
+		values(#{content}, #{figure}, #{regUsrId})
+	</insert>
+	<update id="update" parameterType="com.newlecture.web.entity.Question">
+		update [Question]
+		set 
+			 [name] = #{name}
+		     , [email] = #{email}
+		     , [pwd] = #{pwd}
+		 where id = #{id}
+	</update>
+	<delete id="delete" parameterType="String">
+		delete from Question where id = #{param1}
+	</delete>
+	<select id="get" resultType="com.newlecture.web.entity.Question">
+		select * from Question where id = #{param1}
+	</select>
+	<select id="getList" resultType="com.newlecture.web.entity.Question">
+		select * from Question
+		where ${param1} like '%${param2}%'
+		order by regDate desc
+		offset #{(param3-1)*10} rows
+		fetch next 10 rows only
+	</select>
+</mapper>
