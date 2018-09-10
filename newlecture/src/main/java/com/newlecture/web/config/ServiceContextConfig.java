@@ -1,5 +1,7 @@
 package com.newlecture.web.config;
 
+import java.util.Properties;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -8,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
 @ComponentScan(basePackages= {"com.newlecture.web.dao.mybatis", "com.newlecture.web.service"})
@@ -61,5 +64,28 @@ public class ServiceContextConfig{
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 	
+	@Bean
+	public JavaMailSenderImpl mailSender() {
+		
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+		
+		mailSender.setDefaultEncoding("UTF-8");
+
+		mailSender.setHost("smtp.gmail.com");
+		mailSender.setPort(587);
+		mailSender.setUsername("hl536985@gmail.com");
+		mailSender.setPassword("dmsqlc79");
+		
+		Properties javaMailProperitis = new Properties();
+		
+		javaMailProperitis.put("mail.transport.protocol", "smtp");
+		javaMailProperitis.put("mail.smtp.auth", true);
+		javaMailProperitis.put("mail.smtp.starttls.enable", true);
+		javaMailProperitis.put("mail.debug", true);
+		mailSender.setJavaMailProperties(javaMailProperitis);
+		
+		return mailSender;
+		
+	}
 	
 }

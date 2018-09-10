@@ -28,4 +28,14 @@
 		offset #{(param3-1)*10} rows
 		fetch next 10 rows only
 	</select>
+	
+	<select id="getByEmail" resultType="com.newlecture.web.entity.Member">
+		select * from Member where email = #{param1}
+	</select>
+	
+	<select id="getById" resultType="com.newlecture.web.entity.Member">
+		select * from Member where id = #{param1}
+	</select>
+	
+	
 </mapper>

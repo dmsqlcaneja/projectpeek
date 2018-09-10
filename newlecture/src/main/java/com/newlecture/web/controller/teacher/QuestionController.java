@@ -1,5 +1,9 @@
 package com.newlecture.web.controller.teacher;
 
+import java.nio.file.attribute.UserPrincipal;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +26,13 @@ public class QuestionController {
 	    return 뷰 문자열을 줄이기 위해서 ViewResolver를 설정하였다.
 	4. model을 사용하는 방법을 이해하기
 	 */
+	
+//	, HttpServletRequest request, UserPrincipal principal
 	@RequestMapping("type")
 	public String type(Model model) {
+				
 		model.addAttribute("test", "Hello");
+		
 		return "teacher.question.type";
 	}
 	

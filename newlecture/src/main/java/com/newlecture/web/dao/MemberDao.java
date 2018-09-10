@@ -14,5 +14,8 @@ public interface MemberDao {
 	List<Member> getList(int page);
 	List<Member> getList(String field, String name);
 	List<Member> getList(String field, String name, int page);
+	Member getByEmail(String email);
+	Member getById(String id);
+	
 	
 }

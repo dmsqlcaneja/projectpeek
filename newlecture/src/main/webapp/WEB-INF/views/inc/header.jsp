@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 
 <header id="header">
@@ -21,23 +22,48 @@
       <h1 class="hidden">로그인 정보</h1>
       <section id="profile">
          <h1 class="hidden">프로필</h1>
-         <div>
+       	<div>
             <div class="photo" style="background:url('https://interactive-examples.mdn.mozilla.net/media/cc0-images/Painted_Hand--298x332.jpg') no-repeat center;	
    	  background-size:cover"></div>
             <div class="uid"><span>newlec</span></div>
+            
             <!-- request.getUserPrincipal().getName() -->
             <!-- 4대 저장소 / param, header, pageContext[sesction,reqeust...등등] -->
+            
            <%--${pageContext.request.userPrincipal } --%> 
-            <c:if test="${empty pageContext.request.userPrincipal}">
+            <%-- <c:if test="${empty pageContext.request.userPrincipal}">
             <div class="auth-status"><a href="/member/login">로그인</a></div>
-            </c:if>
-            <c:if test="${not empty pageContext.request.userPrincipal != null}">
+            </c:if> --%>
+            
+            <!-- https://www.mkyong.com/spring3/spring-el-operators-example/ -->
+            
+            <security:authorize access="!isAuthenticated()">
+            	<div class="auth-status"><a href="/member/login">로그인</a></div>
+            </security:authorize>
+            
+            <%-- <c:if test="${not empty pageContext.request.userPrincipal != null}">
             <div class="auth-status"><a href="/member/logout">로그아웃</a></div>
-            </c:if>
+            </c:if> --%>
+            
+            <security:authorize access="isAuthenticated()">
+            <div class="auth-status"><a href="/member/logout">
+            	<security:authentication property="name" />님 로그아웃</a></div>
+            </security:authorize>
+            
+            <a href="/member/join">회원가입</a>
+            
+            
+		</div>
+            
+      	    <security:authorize access="hasRole('TEACHER')">  
             <div class="notice"><span>강사공지 : </span><a href="">3</a></div>
+            </security:authorize>
             <!-- <div class="notice"><span>강사공지 : </span><a href="">3</a></div> -->
-         </div>
-      </section>   
+         
+         
+      </section>
+      
+         
       <section id="teacher-menu" >
          <h1 class="hidden">강사메뉴</h1>
          <ul>

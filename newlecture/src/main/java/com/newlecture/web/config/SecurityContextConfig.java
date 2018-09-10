@@ -64,7 +64,7 @@ public class SecurityContextConfig extends WebSecurityConfigurerAdapter  {
 	        .loginProcessingUrl("/member/login")/*로그인 페이지와 url은 세트로 있어야 한다. post요청은 이 페이지에서 한다.*/
 	        .defaultSuccessUrl("/index")/*그냥 로그인 성공하면 어디로 갈것인가, 보통 사용자의 메인페이지로 간다*/
 	        .successHandler(successHandler)/*로그인 성공했어, 너 처리할 거 있니?? 어디로 갈래? / 클래스 만들고, 객체 만들고, 구현해줘야함*/
-	    .and()
+	        .and()
 	    .logout()
 	        .logoutUrl("/member/logout")/*로그아웃할때 어느 페이지로 갈 것이냐*/
 	        .logoutSuccessUrl("/index")/*로그아웃 성공하면 어느 페이지로 갈 것이냐*/
