@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -83,6 +85,18 @@ public class ServletContextConfig implements WebMvcConfigurer {
 		
 		WebMvcConfigurer.super.configureMessageConverters(converters);
 	}
-	//변환해주는 방식 무엇을?? 
+	
+	// 
+	@Bean
+ 	public CommonsMultipartResolver multipartResolver() {
+		
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setMaxUploadSize(1024*1024*100);
+		resolver.setMaxUploadSizePerFile(1024*1024*10);
+		
+		return resolver;
+ 		
+ 	}
+ 	
 	
 }

@@ -5,14 +5,14 @@
 	<section id="form-section">
 	<!-- 단위 프로그래밍이 유행중  -->
 		<h1>회원가입 페이지</h1>
-		<form method="post">
+		<form method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<td>
 						<label>사진 : </label>
-						<img alt="" src="">
-						<input type="file" value="사진선택" hidden="true" />
-						<span>사진선택</span>
+						<img class="photo" alt="" src="">
+						<input type="file" value="사진선택" hidden="true" name="photo-file" />
+						<span class="foto-button">사진선택</span>
 					</td>
 					<td>
 						<label>아이디 : </label>
@@ -32,9 +32,14 @@
 						<input name="email" readonly="readonly" value="${email}"/>
 					</td>
 				</tr>
+				<tr>
+					<td>
+						<input type="submit" value="회원가입" />
+					</td>
+				</tr>
 			</table>
 		</form>
-		아이디,이름,이메일,생년월일,주소,전화번호,닉네임,성별,비밀번호, 
+		 
 	</section>
 </main>
 
@@ -49,6 +54,65 @@
 		var formSection = document.querySelector("#form-section");
 		var idCheckButton = formSection.querySelector(".id-check-button");
 		var idInput = formSection.querySelector("input[name=id]");
+		var submitButton = formSection.querySelector("input[type=submit]")
+		var idOk = false;
+		
+		var fotoButton = formSection.querySelector(".foto-button")
+		var fileButton = formSection.querySelector("input[type=file]");
+		var photo = formSection.querySelector(".photo");
+
+
+
+		fileButton.onchange = function(e){
+
+			var file = fileButton.files[0];
+
+			//파일 타입 확인 
+			if(file.type.indexOf('image/') < 0 ){
+				alert("이미지형식이 아닙니다.");
+				return;
+			};
+
+			//파일 사이즈 확인 
+			if(file.size > 1024*1024*10){
+				alert("이미지는 10MB를 초과할 수 없습니다.");
+				return;
+			}
+			
+
+			var reader = new FileReader();
+			//다운로드가 완료되면 진행하라. 
+			reader.onload = function(evt){
+				photo.src = evt.target.result;
+			};
+			reader.readAsDataURL(file);
+
+			
+		};
+
+		//트리거 활용 사진 업로드 
+		fotoButton.onclick = function(e){
+			
+			var event = new MouseEvent("click", {
+	            'view': window,
+	            'bubbles':true,
+	            'cancelable':true
+	        });
+			fileButton.dispatchEvent(event);
+	        
+		};
+
+		submitButton.onclick = function(e){
+			
+			
+
+			if(!idOk){
+				alert("아이디 중복확인을 해주세요.");
+				e.preventDefault();
+			}
+
+
+		};
 		
 		idCheckButton.onclick = function(e){
 			
@@ -59,9 +123,18 @@
 			var id = idInput.value;
 
 			
-			var request = new XmlhttpRequest();
+			var request = new XMLHttpRequest();
 			
 			request.onload = function(e){
+				
+				var duplicated = JSON.parse(request.responseText);
+
+				if(duplicated){
+					alert("이미 사용중인 아이디 입니다.");
+					return;
+				}
+
+				//idOk = ;
 				
 				if(request.status != 200) {
 					alert("서버상의 오류가 발생하였습니다.");
