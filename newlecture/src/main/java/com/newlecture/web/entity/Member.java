@@ -58,6 +58,11 @@ public class Member {
 		return "Member [id=" + id + ", name=" + name + ", email=" + email + ", pwd=" + pwd + ", regDate=" + regDate
 				+ "]";
 	}
+
+	public void setPhoto(String uploadedFileName) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

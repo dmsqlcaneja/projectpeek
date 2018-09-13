@@ -49,7 +49,14 @@ public class SecurityContextConfig extends WebSecurityConfigurerAdapter  {
 			.formLogin() //폼으로 
 		*/
 		
+		
 		http
+		
+		.headers()
+			.frameOptions()
+			.sameOrigin()
+			.and()
+		
 		.csrf().disable() //CSRF공격을 막아보자
 		.authorizeRequests() 
 			//.antMatchers("/admin/**").hasRole("ADMIN")

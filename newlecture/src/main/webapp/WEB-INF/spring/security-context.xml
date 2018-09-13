@@ -11,6 +11,11 @@
 		
 	<!--  * : 바로 밑 디렉토리만 /// ** : 하위 모든 디렉토리만  -->
 	<http auto-config="true">
+		<headers>
+			<frame-options policy= "SAMEORIGIN" />
+			<!-- DENY,SAMEORIGIN,ALLOW-FROM  -->
+		</headers>
+	
 		<intercept-url pattern="/teacher/**" access="hasRole('ROLE_TEACHER')" />
 	</http>
 	

@@ -48,4 +48,10 @@ public class QuestionController {
 		
 		return "redirect:type";
 	}
+	
+	@GetMapping("list")
+	public String list() {
+		return "teacher.question.list";
+	}	
+	
 }

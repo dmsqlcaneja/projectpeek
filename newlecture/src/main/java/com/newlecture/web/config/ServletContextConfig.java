@@ -93,6 +93,7 @@ public class ServletContextConfig implements WebMvcConfigurer {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
 		resolver.setMaxUploadSize(1024*1024*100);
 		resolver.setMaxUploadSizePerFile(1024*1024*10);
+		resolver.setDefaultEncoding("UTF-8");
 		
 		return resolver;
  		

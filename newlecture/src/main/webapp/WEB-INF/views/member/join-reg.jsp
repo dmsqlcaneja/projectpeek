@@ -14,22 +14,36 @@
 						<input type="file" value="사진선택" hidden="true" name="photo-file" />
 						<span class="foto-button">사진선택</span>
 					</td>
+				</tr>
+				<tr>
 					<td>
 						<label>아이디 : </label>
 						<input name="id" value="${uid}"/> <!-- 패턴사용으로 아이디 제약조건 -->
 						<input type="button" class="id-check-button" value="중복조회" required="required" />
 					</td>
+				</tr>
+				<tr>
 					<td>
 						<label>비밀번호 : </label>
-						<input name="pwd" required="required" />
+						<input type="password" name="pwd" required="required" />
 					</td>
+				</tr>
+				<tr>
 					<td>
 						<label>이름 : </label>
 						<input name="name" required="required"/>
 					</td>
+				</tr>
+				<tr>
 					<td>
 						<label>이메일 : </label>
 						<input name="email" readonly="readonly" value="${email}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>다음계산결과는? <img src="moonjae.jpg"></label>
+						<input name="moonjae" />
 					</td>
 				</tr>
 				<tr>
@@ -102,7 +116,7 @@
 	        
 		};
 
-		submitButton.onclick = function(e){
+/* 		submitButton.onclick = function(e){
 			
 			
 
@@ -113,7 +127,7 @@
 
 
 		};
-		
+ */		
 		idCheckButton.onclick = function(e){
 			
 			alert("test");

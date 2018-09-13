@@ -31,7 +31,7 @@ public class MybatisHomeService {
 				roleName = role.getRoleName();
 		
 		
-		return " ";
+		return roleName;
 		
 	}
 
@@ -60,5 +60,21 @@ public class MybatisHomeService {
 		
 		return false;
 	}
+
+	public int insertMember(Member member) {
+		
+		
+		int result = memberDao.insert(member);
+		memberRoleDao.insert(new MemberRole(member.getId(), "ROLE_TEACHER", true));
+		
+		return result;
+		
+	}
+	
+	public Member getMember(String id) {
+		return memberDao.get(id);
+	}
+	
+	
 
 }
